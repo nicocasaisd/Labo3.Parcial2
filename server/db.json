@@ -1,0 +1,84 @@
+{
+  "superheroes": [
+    {
+      "id": 1,
+      "nombre": "Filide",
+      "alias": "Lamswood",
+      "editorial": "Marvel",
+      "fuerza": 38,
+      "arma": 2
+    },
+    {
+      "id": 2,
+      "nombre": "Ivy",
+      "alias": "Penlington",
+      "editorial": "DC",
+      "fuerza": 48,
+      "arma": 5
+    },
+    {
+      "id": 3,
+      "nombre": "Tiffany",
+      "alias": "Cullington",
+      "editorial": "DC",
+      "fuerza": 35,
+      "arma": 6
+    },
+    {
+      "id": 4,
+      "nombre": "Lynnett",
+      "alias": "Sirmond",
+      "editorial": "Marvel",
+      "fuerza": 25,
+      "arma": 4
+    },
+    {
+      "id": 5,
+      "nombre": "Gaston",
+      "alias": "Krinks",
+      "editorial": "DC",
+      "fuerza": 2,
+      "arma": 5
+    },
+    {
+      "id": 6,
+      "nombre": "Seka",
+      "alias": "Kleinschmidt",
+      "editorial": "Marvel",
+      "fuerza": 67,
+      "arma": 5
+    },
+    {
+      "id": 7,
+      "nombre": "Marcie",
+      "alias": "Oliver",
+      "editorial": "DC",
+      "fuerza": 53,
+      "arma": 3
+    },
+    {
+      "id": 8,
+      "nombre": "Caresa",
+      "alias": "Hainsworth",
+      "editorial": "DC",
+      "fuerza": 17,
+      "arma": 2
+    },
+    {
+      "id": 9,
+      "nombre": "Shaughn",
+      "alias": "Reichhardt",
+      "editorial": "DC",
+      "fuerza": 76,
+      "arma": 4
+    },
+    {
+      "id": 10,
+      "nombre": "Fran",
+      "alias": "Satteford",
+      "editorial": "DC",
+      "fuerza": 87,
+      "arma": 3
+    }
+  ]
+}

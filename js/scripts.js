@@ -12,6 +12,8 @@ import {
 } from "./validaciones.js";
 import { actualizarTabla, crearCheckColumnas } from "./tabla.js";
 
+const URL = "http://localhost:3000/superheroes";
+
 // Opciones
 
 const armas_const = [
