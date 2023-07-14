@@ -78,8 +78,10 @@ $formulario.addEventListener("submit", (e) => {
 $btnEliminar.addEventListener("click", (e) => {
   if (confirm("Desea eliminar el elemento?")) {
     console.log("Eliminar...");
-    handlerDelete(parseInt($formulario.txtId.value), array, $tabla);
+    limpiarTabla();
+    handlerDelete(parseInt($formulario.txtId.value));
     $formulario.reset();
+    handlerRead();
   }
 });
 

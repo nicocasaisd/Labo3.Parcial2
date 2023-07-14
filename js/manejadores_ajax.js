@@ -45,9 +45,7 @@ export function handlerCreate(nuevoElemento) {
 }
 
 export function handlerUpdate(editElemento) {
-  
   console.log("En handler update");
-  console.log(editElemento);
   const xhr = new XMLHttpRequest();
   xhr.addEventListener("readystatechange", () => {
     if (xhr.readyState == 4) {
@@ -63,27 +61,24 @@ export function handlerUpdate(editElemento) {
   xhr.open("PUT", URL + "/" + editElemento.id);
   xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
   xhr.send(JSON.stringify(editElemento)); // acá adentro va el body
-
-
-
-
-  // let index = array.findIndex((el) => el.id == editElemento.id);
-
-  // array.splice(index, 1, editElemento);
-
-  // actualizarStorage("array", array);
-  // actualizarTabla(array);
 }
 
-export function handlerDelete(id, array, contenedor) {
-  // console.log("id",id);
-  let index = array.findIndex((el) => el.id == id);
-  //   console.log("index",index);
-  if (index > -1) {
-    array.splice(index, 1);
-    actualizarStorage("array", array);
-    actualizarTabla(array);
-  }
+export function handlerDelete(id) {
+  console.log("En handler delete");
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener("readystatechange", () => {
+    if (xhr.readyState == 4) {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        const msg = JSON.parse(xhr.responseText);
+        console.log(msg);
+      } else {
+        console.error(`Error: ${xhr.status}- ${xhr.statusText}`);
+      }
+    }
+  });
+
+  xhr.open("DELETE", URL + "/" + id);
+  xhr.send();
 }
 
 export function actualizarStorage(clave, data) {
