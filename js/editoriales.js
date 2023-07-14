@@ -12,6 +12,35 @@ editoriales.forEach((el, index) => {
   $selectEditorial.appendChild(option);
 });
 
+// Dropdown List
+
+// Deshabilito el Menú Select
+$selectEditorial.disabled = true;
+
+const $dropdownEditorial = document.getElementById("dropdownEditorial");
+const $dropdownUl = document.getElementById("dropdownUl");
+
+// Crea opciones de editorial
+editoriales.forEach((el) => {
+  let li = document.createElement("li");
+  let a = document.createElement("a");
+  a.classList.add("dropdown-item");
+  a.text = el;
+  li.appendChild(a);
+  $dropdownUl.appendChild(li);
+});
+
+// Event Click
+$dropdownEditorial.addEventListener("click", (e) => {
+  if (e.target.matches("a")) {
+    let opcionText = e.target.innerHTML;
+    let opcionNro = editoriales.indexOf(opcionText);
+    $selectEditorial.value = opcionNro+1;
+    $selectEditorial.dispatchEvent(new Event("change"));
+  }
+});
+
+
 // FILTER
 export function filtrarPorEditorial(array)
 {

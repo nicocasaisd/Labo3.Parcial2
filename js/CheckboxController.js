@@ -18,13 +18,12 @@ $chkBoxGroup.addEventListener("change", () => {
 // Funciones
 
 export function inicializarCheckbox() {
-  console.log("inicializar checkbox");
+  console.log("Inicializando checkbox..");
   let checkbox_array = JSON.parse(localStorage.getItem("checkbox_array"));
 
   // Asigno valores de checkBox a partir del array en localStorage
   if (checkbox_array) {
     let group = [...document.querySelectorAll("#chkBoxGroup input")];
-
     group.forEach((chb, index) => {
       chb.checked = checkbox_array[index];
     });
@@ -32,7 +31,7 @@ export function inicializarCheckbox() {
 }
 
 function actualizarCheckbox() {
-  console.log("actualizar checkbox");
+  console.log("Actualizando checkbox..");
   let group = [...document.querySelectorAll("#chkBoxGroup input")];
   group = group.map((e) => e.checked);
   toggleCheckbox(group);
@@ -63,18 +62,20 @@ function showColumn(index) {
 }
 
 function crearCheckColumnas(elemento) {
+  // Crear Row
   const div = document.createElement("div");
   div.classList.add("row");
-
+  // Crear Check Divs
   for (const key in elemento) {
     if (key == "id") {
       continue;
     }
+    // Check Div
     let checkDiv = document.createElement("div");
     checkDiv.classList.add("form-check");
     checkDiv.classList.add("text-capitalize");
     checkDiv.classList.add("col");
-    // let heading = key;
+    // CheckBox
     let check = document.createElement("input");
     check.setAttribute("type", "checkbox");
     check.setAttribute("checked", true);

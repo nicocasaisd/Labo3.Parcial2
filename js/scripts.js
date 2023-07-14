@@ -49,6 +49,7 @@ const $btnCancelar = document.getElementById("btnCancelar");
 window.addEventListener("click", (e) => {
   if (e.target.matches("td")) {
     const selectedElement = e.target.parentElement;
+    console.log(selectedElement);
     selectedElement.id = e.target.parentElement.getAttribute("data-id");
     cargarElementoEnFormulario($formulario, selectedElement);
     $btnEliminar.disabled = false;
