@@ -14,6 +14,7 @@ import {
   handlerDelete,
 } from "./manejadores_ajax.js";
 import {
+  limpiarFormulario,
   cargarElementoEnFormulario,
   CrearNuevoElemento,
 } from "./FormController.js";
@@ -54,25 +55,25 @@ window.addEventListener("click", (e) => {
     cargarElementoEnFormulario($formulario, selectedElement);
     $btnEliminar.disabled = false;
     $btnGuardar.textContent = "Modificar";
-
-    // console.log(selectedElement);
   }
 });
 
 $formulario.addEventListener("submit", (e) => {
   e.preventDefault();
-  const nuevoElementoForm = CrearNuevoElemento($formulario);
-  limpiarTabla();
+  const nuevoElementoForm = CrearNuevoElemento($formulario);  
   // ABM
-  if ($formulario.txtId.value == "") {
-    handlerCreate(nuevoElementoForm);
-    console.log("Creación de elemento..");
-  } else{
-    console.log("Actualización de elemento..");
-    handlerUpdate(nuevoElementoForm);
+  if (nuevoElementoForm) {
+    limpiarTabla();
+    if ($formulario.txtId.value == "") {
+      handlerCreate(nuevoElementoForm);
+      console.log("Creación de elemento..");
+    } else {
+      console.log("Actualización de elemento..");
+      handlerUpdate(nuevoElementoForm);
+    }
+    $formulario.reset();
+    handlerRead();
   }
-  $formulario.reset();
-  handlerRead();
 });
 
 $btnEliminar.addEventListener("click", (e) => {
@@ -87,12 +88,7 @@ $btnEliminar.addEventListener("click", (e) => {
 
 $btnCancelar.addEventListener("click", (e) => {
   console.log("Cancelando...");
-  document.getElementById("mensaje-formulario").textContent = "";
-  $formulario.txtId.value = "";
-  $formulario.reset();
-  $btnEliminar.disabled = true;
-  // $btnGuardar.value = "Guardar";
-  $btnGuardar.textContent = "Guardar";
+  limpiarFormulario();
 });
 
 // CheckBox Group

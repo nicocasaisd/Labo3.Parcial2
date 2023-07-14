@@ -6,8 +6,23 @@ import {
 import {armas} from "./armas.js";
 import { SuperHeroe } from "./superheroe.js";
 
-
+// Formulario
+const $formulario = document.forms[0];
 const $mensajeFormulario = document.getElementById("mensaje-formulario");
+
+// Botones
+const $btnGuardar = document.getElementById("btnGuardar");
+const $btnEliminar = document.getElementById("btnEliminar");
+const $btnCancelar = document.getElementById("btnCancelar");
+
+export function limpiarFormulario()
+{
+  $mensajeFormulario.textContent = "";
+  $formulario.txtId.value = "";
+  $formulario.reset();
+  $btnEliminar.disabled = true;
+  $btnGuardar.textContent = "Guardar";
+}
 
 export function CrearNuevoElemento($formulario) {
   // Desestructuracion de formulario
