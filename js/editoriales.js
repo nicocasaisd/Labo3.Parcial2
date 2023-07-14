@@ -1,10 +1,11 @@
+import { actualizarTabla } from "./tabla.js";
+
 // Opciones Editorial
 const editoriales = ["Todas", "DC", "Marvel"];
-
 const $selectEditorial = document.getElementById("select-editorial");
 
+// Crea opciones de editorial
 editoriales.forEach((el, index) => {
-  // console.log(el);
   let option = document.createElement("option");
   option.textContent = el;
   option.value = index + 1;
@@ -12,19 +13,18 @@ editoriales.forEach((el, index) => {
 });
 
 // FILTER
+export function filtrarPorEditorial(array)
+{
+  // console.log('Array antes de filtrar', array);
+  let selectedEditorial = editoriales[$selectEditorial.value - 1];
+  let arrayFiltrado = filtrarEditorial(array, selectedEditorial);
+  actualizarTabla(arrayFiltrado);
 
-$selectEditorial.addEventListener("change", () => {
-    if (!($selectEditorial.value == 1)) {
-      let editorial = editoriales[$selectEditorial.value - 1];
-      display_array = filtrarEditorial(array, editorial);
-      actualizarTabla($tabla, display_array);
-    } else {
-      display_array = array;
-      actualizarTabla($tabla, array);
-    }
-  });
-  
-  function filtrarEditorial(arr, editorial) {
-    return arr.filter((e) => e.editorial === editorial);
-  }
-  
+  // console.log('Array despues de filtrar', arrayFiltrado);
+  return arrayFiltrado;
+}
+
+
+export function filtrarEditorial(arr, editorial) {
+  return arr.filter((e) => e.editorial === editorial);
+}

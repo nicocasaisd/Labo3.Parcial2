@@ -12,12 +12,12 @@ main{
     display: flex;
     flex-direction: row;
 }
-article{
-    /* width: 250px;
-    height: 400px; */
+/* article{
+    width: 250px;
+    height: 400px; 
     padding: 40px;
     margin: 30px;
     background-color:beige;
     display:inline-block;
     align-items: center;
-}
+} */

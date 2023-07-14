@@ -4,7 +4,7 @@ import {
   validarOpciones,
 } from "./validaciones.js";
 import {armas} from "./armas.js";
-import { SuperHeroe } from "./superheroe.js";
+import { SuperHeroe } from "./Superheroe.js";
 
 // Formulario
 const $formulario = document.forms[0];

@@ -1,36 +1,37 @@
-import { SuperHeroe } from "./superheroe.js";
-// import {
-//   handlerCreate,
-//   handlerUpdate,
-//   actualizarStorage,
-//   handlerDelete,
-// } from "./manejadores.js";
-
-import { limpiarTabla, actualizarTabla, crearCheckColumnas } from "./tabla.js";
+import { limpiarTabla, actualizarTabla } from "./tabla.js";
 import {
   handlerRead,
   handlerCreate,
   handlerUpdate,
   handlerDelete,
-} from "./manejadores_ajax.js";
+} from "./CrudControllerAjax.js";
 import {
   limpiarFormulario,
   cargarElementoEnFormulario,
   CrearNuevoElemento,
 } from "./FormController.js";
 
+import { filtrarPorEditorial } from "./editoriales.js";
 import "./armas.js";
 import "./editoriales.js";
 import "./fuerza.js";
+import { AsignarPromedioFuerza } from "./fuerza.js";
+import "./CheckboxController.js";
+
+// Obtengo punteros
+let array = [];
+let arrayFiltrado = [];
+
+const $formulario = document.forms[0];
+const $selectEditorial = document.getElementById("select-editorial");
 
 window.addEventListener("load", () => {
   console.log("load");
-  handlerRead();
+  handlerRead((data) => {
+    array = data;
+    dispatchEvent(new Event("calcularFuerza"));
+  });
 });
-
-// Obtengo punteros
-
-const $formulario = document.forms[0];
 
 // const array = JSON.parse(localStorage.getItem("array")) || [];
 // console.log(array);
@@ -40,12 +41,6 @@ const $formulario = document.forms[0];
 const $btnGuardar = document.getElementById("btnGuardar");
 const $btnEliminar = document.getElementById("btnEliminar");
 const $btnCancelar = document.getElementById("btnCancelar");
-
-// Mensaje
-// $mensajeFormulario = document.getElementById("mensaje-formulario")
-
-// console.log(array);
-// if (array.length > 0) actualizarTabla($tabla, array);
 
 // WINDOW CLICK
 window.addEventListener("click", (e) => {
@@ -58,9 +53,11 @@ window.addEventListener("click", (e) => {
   }
 });
 
+// Evento Submit
+
 $formulario.addEventListener("submit", (e) => {
   e.preventDefault();
-  const nuevoElementoForm = CrearNuevoElemento($formulario);  
+  const nuevoElementoForm = CrearNuevoElemento($formulario);
   // ABM
   if (nuevoElementoForm) {
     limpiarTabla();
@@ -71,50 +68,52 @@ $formulario.addEventListener("submit", (e) => {
       console.log("Actualización de elemento..");
       handlerUpdate(nuevoElementoForm);
     }
-    $formulario.reset();
-    handlerRead();
+    limpiarFormulario();
+    handlerRead((data) => {
+      array = data;
+    });
   }
 });
+
+// Evento Eliminar
 
 $btnEliminar.addEventListener("click", (e) => {
   if (confirm("Desea eliminar el elemento?")) {
     console.log("Eliminar...");
     limpiarTabla();
     handlerDelete(parseInt($formulario.txtId.value));
-    $formulario.reset();
-    handlerRead();
+    limpiarFormulario();
+    handlerRead((data) => {
+      array = data;
+    });
+    // console.log(array);
   }
 });
+
+// Evento Cancelar
 
 $btnCancelar.addEventListener("click", (e) => {
   console.log("Cancelando...");
   limpiarFormulario();
 });
 
-// CheckBox Group
+// Eventos de Filtrado de Editorial
+// window.addEventListener("actualizacionTabla", handlerFiltrarEditorial);
+$selectEditorial.addEventListener("change", handlerFiltrarEditorial);
 
-const $chkBoxGroup = document.getElementById("chkBoxGroup");
-$chkBoxGroup.appendChild(crearCheckColumnas(array[0]));
+function handlerFiltrarEditorial() {
+  if (!($selectEditorial.value == 1)) {
+    // console.log(array);
+    arrayFiltrado = filtrarPorEditorial(array);
+  } else {
+    arrayFiltrado = array;
+    actualizarTabla(array);
+  }
+  dispatchEvent(new Event("calcularFuerza"));
+}
 
-$chkBoxGroup.addEventListener("change", () => {
-  console.log("cambio");
-  let group = [...document.querySelectorAll("#chkBoxGroup input")];
-  group = group.map((e) => e.checked);
-  group.forEach((e, index) => (e ? showColumn(index) : hideColumn(index)));
+// Evento Calcular Fuerza
+window.addEventListener("calcularFuerza", () => {
+  if (arrayFiltrado.length > 0) AsignarPromedioFuerza(arrayFiltrado);
+  else AsignarPromedioFuerza(array);
 });
-
-function hideColumn(index) {
-  const cells = [...document.querySelectorAll("td,th")];
-  cells.forEach((cell) => {
-    if (cell.getAttribute("data-column-index") == index)
-      cell.style.display = "none";
-  });
-}
-
-function showColumn(index) {
-  const cells = [...document.querySelectorAll("td,th")];
-  cells.forEach((cell) => {
-    if (cell.getAttribute("data-column-index") == index)
-      cell.style.display = "";
-  });
-}

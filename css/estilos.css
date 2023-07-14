@@ -1,6 +1,6 @@
 body {
   color: #a8dadc;
-  background-color: #282f44;
+  /* background-color: #282f44; */
   font-family: "Roboto", monospace;
   font-weight: 400;
 }
@@ -9,11 +9,11 @@ body {
   height: 100px;
   width: 100px;
 }
-table {
+/* table {
   width: 80%;
   border-collapse: collapse;
   margin: 0 auto;
-}
+} */
 thead {
   background-color: #6d3b47;
 }

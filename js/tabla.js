@@ -1,7 +1,8 @@
-
 const $tabla = document.getElementById("tabla");
 
-export function limpiarTabla(){
+// $tabla.classList.add("table-responsive");
+
+export function limpiarTabla() {
   // Elimino todos los nodos hijos del $tabla
   while ($tabla.firstElementChild) {
     $tabla.removeChild($tabla.firstElementChild);
@@ -15,50 +16,49 @@ export function actualizarTabla(data) {
   }
   // Agregar la data
   $tabla.appendChild(crearTabla(data));
-  dispatchEvent(new Event("actualizar"));
   console.log("Actualización de tabla..");
+  dispatchEvent(new Event("calcularFuerza"));
+  dispatchEvent(new Event("checkboxChange"));
+  // dispatchEvent(new Event("actualizacionTabla"));
 }
-
-
 
 export const crearTabla = (data) => {
   if (!Array.isArray(data)) return null;
 
   const tabla = document.createElement("table");
+  tabla.classList.add("table");
+  tabla.classList.add("table-primary");
+  tabla.classList.add("table-striped");
+  tabla.classList.add("table-hover");
+  tabla.classList.add("table-bordered");
+  // tabla.classList.add("table-active");
 
   tabla.appendChild(crearCabecera(data[0]));
   tabla.appendChild(crearCuerpo(data));
 
-  indexarColumnas(tabla, Object.keys(data[0]).length-1);
+  indexarColumnas(tabla, Object.keys(data[0]).length - 1);
   return tabla;
 };
 
-function indexarColumnas(tabla, numColumns){
-  const cells = [...tabla.querySelectorAll('th, td')];
-  cells.forEach((cell,index)=>{
-    cell.setAttribute('data-column-index', index % numColumns);
-  })
-  console.log(cells);
+function indexarColumnas(tabla, numColumns) {
+  const cells = [...tabla.querySelectorAll("th, td")];
+  cells.forEach((cell, index) => {
+    cell.setAttribute("data-column-index", index % numColumns);
+  });
+  // console.log(cells);
 }
 
 const crearCabecera = (elemento) => {
   const tHead = document.createElement("thead"),
     headRow = document.createElement("tr");
-  headRow.style.setProperty("background-color", "#6D3B47");
+  // headRow.style.setProperty("background-color", "#6D3B47");
+  tHead.classList.add("table-dark")
 
   for (const key in elemento) {
     let heading = key;
 
-    switch (key) {
-      case "id":
-        continue;
-        break;
-      /*       case "numBanios":
-        heading = "Cantidad de Baños";
-        break;
-         */
-      default:
-        break;
+    if (key == "id") {
+      continue;
     }
     const th = document.createElement("th");
     th.textContent = heading;
@@ -82,7 +82,7 @@ const crearCuerpo = (data) => {
       } else {
         const td = document.createElement("td");
         td.textContent = element[key];
-        td.setAttribute('data-column-index', index % element.length);
+        td.setAttribute("data-column-index", index % element.length);
 
         tr.appendChild(td);
       }
@@ -91,48 +91,4 @@ const crearCuerpo = (data) => {
   });
 
   return tBody;
-};
-
-export const crearCheckColumnas = (elemento) => {
-  // const tHead = document.createElement("thead"),
-  //   headRow = document.createElement("tr");
-  // headRow.style.setProperty("background-color", "#6D3B47");
-  const div = document.createElement("div");
-  div.classList.add('row');
-
-  for (const key in elemento) {
-    if (key == "id") {
-      continue;
-    }
-    let checkDiv = document.createElement('div');
-    checkDiv.classList.add('form-check');
-    checkDiv.classList.add('text-capitalize');
-    checkDiv.classList.add('col');
-    // let heading = key;
-    let check = document.createElement('input');
-    check.setAttribute('type', 'checkbox');
-    check.setAttribute('checked', true);
-    check.setAttribute('id', 'chk' + key);
-    check.setAttribute('value', key);
-    check.classList.add('form-check-input');
-    
-
-    // Label
-    let lbl = document.createElement('label');
-    lbl.setAttribute('for', 'chk' + key);
-    lbl.innerHTML = key;
-    lbl.classList.add('form-check-label');
-
-    checkDiv.appendChild(check);
-    checkDiv.appendChild(lbl);
-
-    div.appendChild(checkDiv);
-    // const th = document.createElement("th");
-    // th.textContent = heading;
-    // headRow.appendChild(th);
-  }
-
-  // tHead.appendChild(headRow);
-
-  return div;
 };

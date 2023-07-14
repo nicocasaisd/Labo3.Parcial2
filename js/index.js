@@ -1,44 +1,51 @@
-import { SuperHeroe } from "./clases.js";
+import { SuperHeroe } from "./Superheroe.js";
+import { handlerRead } from "./CrudControllerFetch.js";
 
-const $superheroes = document.getElementById("superheroes");
-const array = JSON.parse(localStorage.getItem("array")) || [];
+const $articulos = document.getElementById("superheroes");
 const armas = JSON.parse(localStorage.getItem("armas"));
 
-// console.log(array);
+// Evento Load
 
-// Row
-const $row = document.createElement("div");
-$row.classList.add("row");
-$row.classList.add("pt-5");
-$row.classList.add("row-cols-1");
-$row.classList.add("row-cols-md-2");
-$row.classList.add("g-4");
-
-// Append
-$superheroes.appendChild($row);
-
-array.forEach((el, index) => {
-  // console.log(el);
-  let superheroe = new SuperHeroe(
-    el.id,
-    el.nombre,
-    el.alias,
-    el.editorial,
-    el.fuerza,
-    el.arma
-  );
-    
-  $row.appendChild(generarArticulo(superheroe));
-  // $superheroes.appendChild(generarArticulo(superheroe));
-  console.log(index);
+window.addEventListener("load", () => {
+  console.log("load");
+  handlerRead((array) => {
+    console.log(array);
+    propagarArticulos(array);
+  });
 });
 
-function generarArticulo(superheroe) {
-  // Col
-  const col = document.createElement("div");
-  col.classList.add("col-sm-8");
-  col.classList.add("col-md-6");
-  col.classList.add("col-lg-4");
+// Row
+function crearRow() {
+  const row = document.createElement("div");
+  row.classList.add("row");
+  row.classList.add("pt-5");
+  // row.classList.add("row-cols-1");
+  row.classList.add("row-cols-md-2");
+  row.classList.add("g-4");
+
+  return row;
+}
+
+function propagarArticulos(array) {
+  const row = $articulos.appendChild(crearRow());
+
+  array.forEach((el) => {
+    // console.log(el);
+    let superheroe = new SuperHeroe(
+      el.id,
+      el.nombre,
+      el.alias,
+      el.editorial,
+      el.fuerza,
+      el.arma
+    );
+
+    row.appendChild(crearArticulo(superheroe));
+  });
+}
+
+function crearArticulo(superheroe) {
+  let col = crearCardColumn();
 
   // const article = document.createElement("article");
   const article = document.createElement("div");
@@ -46,65 +53,100 @@ function generarArticulo(superheroe) {
   article.classList.add("card"); //Boot
   article.classList.add("bg-info"); //Boot
   article.classList.add("text-center"); //Boot
-  article.classList.add("mg-50"); //Boot
-  console.log(superheroe);
+  // article.classList.add("mg-50"); //Boot
+
+  // Appends
+  const cardHeader = crearCardHeader();
+  const cardBody = crearCardBody();
+
+  cardHeader.appendChild(crearNombre(superheroe));
+  cardBody.appendChild(crearAlias(superheroe));
+  cardBody.appendChild(crearEditorial(superheroe));
+  cardBody.appendChild(crearFuerza(superheroe));
+  cardBody.appendChild(crearArma(superheroe));
+
+  article.append(cardHeader);
+  article.append(cardBody);
 
   col.appendChild(article);
 
-  // Card body
-  const cardHeader = document.createElement("div");
+  return col;
+}
+
+// Funciones para crear cada parte
+
+function crearCardColumn() {
+  // Col
+  const col = document.createElement("div");
+  col.classList.add("col-sm-8");
+  col.classList.add("col-md-6");
+  col.classList.add("col-lg-4");
+
+  return col;
+}
+
+function crearCardHeader() {
+  let cardHeader = document.createElement("div");
   cardHeader.classList.add("card-header"); //Boot
-  article.appendChild(cardHeader);
 
-  // Card body
-  const cardBody = document.createElement("div");
+  return cardHeader;
+}
+
+function crearCardBody() {
+  let cardBody = document.createElement("div");
   cardBody.classList.add("card-body"); //Boot
-  article.appendChild(cardBody);
 
-  // nombres
-  const nombre = document.createElement("h2");
+  return cardBody;
+}
+
+// nombres
+function crearNombre(item) {
+  let nombre = document.createElement("h2");
   nombre.classList.add("card-title");
-  // console.log(superheroe.nombre);
-  nombre.textContent = superheroe.nombre;
-  // article.appendChild(nombre);
-  cardHeader.appendChild(nombre);
+  nombre.textContent = item.nombre;
 
-  // alias
-  const alias = document.createElement("p");
+  return nombre;
+}
+// alias
+function crearAlias(item) {
+  let alias = document.createElement("p");
   alias.classList.add("card-subtitle");
-  alias.textContent = superheroe.alias;
-  cardBody.appendChild(alias);
+  alias.textContent = item.alias;
 
-  // editorial
-  const editorial = document.createElement("p");
+  return alias;
+}
+
+// editorial
+function crearEditorial(item) {
+  let editorial = document.createElement("p");
   editorial.classList.add("card-text");
-  editorial.textContent = superheroe.editorial;
-  cardBody.appendChild(editorial);
+  editorial.textContent = item.editorial;
   // Icono
   editorial.appendChild(crearIcono(' <i class="fa-solid fa-book"></i>'));
 
-  //Fuerza
-  const fuerza = document.createElement("p");
+  return editorial;
+}
+
+//Fuerza
+function crearFuerza(item) {
+  let fuerza = document.createElement("p");
   fuerza.classList.add("card-text");
-  fuerza.textContent = superheroe.fuerza;
+  fuerza.textContent = item.fuerza;
   // Icono
   fuerza.appendChild(crearIcono(' <i class="fa-solid fa-dumbbell"></i>'));
 
-  cardBody.appendChild(fuerza);
+  return fuerza;
+}
 
-  //Arma
-  const arma = document.createElement("p");
+//Arma
+function crearArma(item) {
+  let arma = document.createElement("p");
   arma.classList.add("card-text");
-
-  arma.textContent = armas[superheroe.arma - 1];
+  arma.textContent = armas[item.arma - 1];
   // Icono
   arma.appendChild(crearIcono(' <i class="fa-regular fa-compass"></i>'));
 
-  cardBody.appendChild(arma);
-
-  // console.log(article);
-
-  return col;
+  return arma;
 }
 
 function crearIcono(innerHTML) {

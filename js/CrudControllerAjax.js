@@ -4,15 +4,15 @@ import { MostrarSpinner, OcultarSpinner } from "./spinner.js";
 
 const contenedor = document.getElementById("tabla");
 
-export function handlerRead() {
+export function handlerRead(callback) {
   MostrarSpinner();
   const xhr = new XMLHttpRequest();
-
   xhr.addEventListener("readystatechange", () => {
     if (xhr.readyState == 4) {
       if (xhr.status >= 200 && xhr.status < 300) {
         const data = JSON.parse(xhr.responseText);
         console.log(data);
+        callback(data);
         OcultarSpinner();
         actualizarTabla(data);
       } else {

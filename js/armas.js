@@ -1,4 +1,4 @@
-import { actualizarStorage } from "./manejadores.js";
+import { actualizarStorage } from "./localStorage.js";
 
 const armas_const = [
   "Armadura",
