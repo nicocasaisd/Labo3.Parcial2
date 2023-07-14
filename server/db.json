@@ -79,6 +79,46 @@
       "editorial": "DC",
       "fuerza": 87,
       "arma": 3
+    },
+    {
+      "id": 1689280056530,
+      "nombre": "",
+      "alias": "",
+      "editorial": "Marvel",
+      "fuerza": 50,
+      "arma": 1
+    },
+    {
+      "id": 1689280143522,
+      "nombre": "",
+      "alias": "",
+      "editorial": "Marvel",
+      "fuerza": 50,
+      "arma": 1
+    },
+    {
+      "id": 1689334070877,
+      "nombre": "Nico",
+      "alias": "Casais",
+      "editorial": "Marvel",
+      "fuerza": 50,
+      "arma": 1
+    },
+    {
+      "id": 1689334135021,
+      "nombre": "",
+      "alias": "",
+      "editorial": "Marvel",
+      "fuerza": 50,
+      "arma": 1
+    },
+    {
+      "id": 1689334559998,
+      "nombre": "",
+      "alias": "",
+      "editorial": "Marvel",
+      "fuerza": 50,
+      "arma": 1
     }
   ]
 }

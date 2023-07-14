@@ -1,33 +1,59 @@
 import { actualizarTabla } from "./tabla.js";
+import {URL} from "./config.js";
+import {MostrarSpinner, OcultarSpinner} from "./spinner.js";
 
-const URL = "http://localhost:3000/superheroes";
-const $spinner = document.getElementById("spinner");
 
-export function handlerRead(url) {
+const contenedor = document.getElementById("tabla");
 
-  // Spinner
-  
-  // $spinner.hidden = false;
+export function handlerRead() {
+
+  MostrarSpinner();
   const xhr = new XMLHttpRequest();
 
   xhr.addEventListener("readystatechange", () => {
-    if (xhr.readyState == 4 && xhr.status >= 200 && xhr.status < 300) {
-      const data = JSON.parse(xhr.responseText);
-      console.log(data);
-      // $spinner.hidden = true;
-    } else {
-      console.error(`Error: ${xhr.status}- ${xhr.statusText}`);
+    if (xhr.readyState == 4) {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        const data = JSON.parse(xhr.responseText);
+        console.log(data);
+        OcultarSpinner();
+        actualizarTabla(data);
+      } else {
+        console.error(`Error: ${xhr.status}- ${xhr.statusText}`);
+      }
     }
   });
 
-  xhr.open("GET", url);
+  xhr.open("GET", URL);
   xhr.send();
 }
 
-export function handlerCreate(array, nuevoElemento, contenedor) {
-  array.push(nuevoElemento);
-  actualizarStorage("array", array);
-  actualizarTabla(contenedor, array);
+export function handlerCreate(nuevoElemento) {
+  console.log("En handler create");
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener("readystatechange", () => {
+    if (xhr.readyState == 4) {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        const msg = JSON.parse(xhr.responseText);
+        console.log(msg);
+      } else {
+        console.error(`Error: ${xhr.status}- ${xhr.statusText}`);
+      }
+    }
+  });
+
+  xhr.open("POST", URL);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+  xhr.send(JSON.stringify(nuevoElemento)); // acá adentro va el body
+
+
+
+
+
+
+
+  // array.push(nuevoElemento);
+  // actualizarStorage("array", array);
+  // actualizarTabla(array);
 }
 export function handlerUpdate(array, editElemento, contenedor) {
   let index = array.findIndex((el) => el.id == editElemento.id);
@@ -35,7 +61,7 @@ export function handlerUpdate(array, editElemento, contenedor) {
   array.splice(index, 1, editElemento);
 
   actualizarStorage("array", array);
-  actualizarTabla(contenedor, array);
+  actualizarTabla( array);
 }
 
 export function handlerDelete(id, array, contenedor) {
@@ -45,7 +71,7 @@ export function handlerDelete(id, array, contenedor) {
   if (index > -1) {
     array.splice(index, 1);
     actualizarStorage("array", array);
-    actualizarTabla(contenedor, array);
+    actualizarTabla(array);
   }
 }
 

@@ -4,7 +4,7 @@ const $superheroes = document.getElementById("superheroes");
 const array = JSON.parse(localStorage.getItem("array")) || [];
 const armas = JSON.parse(localStorage.getItem("armas"));
 
-console.log(array);
+// console.log(array);
 
 // Row
 const $row = document.createElement("div");

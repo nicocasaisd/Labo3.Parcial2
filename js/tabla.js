@@ -1,3 +1,19 @@
+
+const $tabla = document.getElementById("tabla");
+
+export function actualizarTabla(data) {
+  // Elimino todos los nodos hijos del $tabla
+  while ($tabla.firstElementChild) {
+    $tabla.removeChild($tabla.firstElementChild);
+  }
+  // Agregar la data
+  $tabla.appendChild(crearTabla(data));
+  dispatchEvent(new Event("actualizar"));
+  console.log("Actualización de tabla..");
+}
+
+
+
 export const crearTabla = (data) => {
   if (!Array.isArray(data)) return null;
 
@@ -16,21 +32,6 @@ function indexarColumnas(tabla, numColumns){
     cell.setAttribute('data-column-index', index % numColumns);
   })
   console.log(cells);
-}
-
-export function actualizarTabla(contenedor, data) {
-  // Elimino todos los nodos hijos del contenedor
-  while (contenedor.firstElementChild) {
-    contenedor.removeChild(contenedor.firstElementChild);
-  }
-  // Agregar la data
-  document.getElementById("spinner").hidden = false;
-  setTimeout(() => {
-    console.log("Delay 2000ms");
-    contenedor.appendChild(crearTabla(data));
-    document.getElementById("spinner").hidden = true;
-    dispatchEvent(new Event("actualizar"));
-  }, 2000);
 }
 
 const crearCabecera = (elemento) => {
