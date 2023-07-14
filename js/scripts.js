@@ -11,12 +11,14 @@ import {
   CrearNuevoElemento,
 } from "./FormController.js";
 
+
 import { filtrarPorEditorial } from "./editoriales.js";
 import "./armas.js";
 import "./editoriales.js";
 import "./fuerza.js";
 import { AsignarPromedioFuerza } from "./fuerza.js";
 import "./CheckboxController.js";
+import { inicializarCheckbox } from "./CheckboxController.js";
 
 // Obtengo punteros
 let array = [];
@@ -31,6 +33,7 @@ window.addEventListener("load", () => {
     array = data;
     dispatchEvent(new Event("calcularFuerza"));
   });
+  inicializarCheckbox();
 });
 
 // const array = JSON.parse(localStorage.getItem("array")) || [];

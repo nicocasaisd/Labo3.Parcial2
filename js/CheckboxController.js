@@ -1,4 +1,5 @@
 import { SuperHeroe } from "./Superheroe.js";
+import { actualizarStorage } from "./localStorage.js";
 
 // CheckBox Group
 
@@ -7,16 +8,39 @@ const $chkBoxGroup = document.getElementById("chkBoxGroup");
 $chkBoxGroup.appendChild(crearCheckColumnas(new SuperHeroe()));
 
 // Eventos de actualización
-window.addEventListener("checkboxChange", () => {actualizarCheckbox();});
-$chkBoxGroup.addEventListener("change", () => {actualizarCheckbox();});
-
+window.addEventListener("checkboxChange", () => {
+  actualizarCheckbox();
+});
+$chkBoxGroup.addEventListener("change", () => {
+  actualizarCheckbox();
+});
 
 // Funciones
 
+export function inicializarCheckbox() {
+  console.log("inicializar checkbox");
+  let checkbox_array = JSON.parse(localStorage.getItem("checkbox_array"));
+
+  // Asigno valores de checkBox a partir del array en localStorage
+  if (checkbox_array) {
+    let group = [...document.querySelectorAll("#chkBoxGroup input")];
+
+    group.forEach((chb, index) => {
+      chb.checked = checkbox_array[index];
+    });
+  }
+}
+
 function actualizarCheckbox() {
-  console.log("cambio");
+  console.log("actualizar checkbox");
   let group = [...document.querySelectorAll("#chkBoxGroup input")];
   group = group.map((e) => e.checked);
+  toggleCheckbox(group);
+  //Guardo en localStorage las opciones
+  actualizarStorage("checkbox_array", group);
+}
+
+function toggleCheckbox(group) {
   group.forEach((bool, index) =>
     bool ? showColumn(index) : hideColumn(index)
   );
