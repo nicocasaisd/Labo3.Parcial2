@@ -6,7 +6,7 @@ import { SuperHeroe } from "./superheroe.js";
 //   handlerDelete,
 // } from "./manejadores.js";
 
-import { actualizarTabla, crearCheckColumnas } from "./tabla.js";
+import { limpiarTabla, actualizarTabla, crearCheckColumnas } from "./tabla.js";
 import {
   handlerRead,
   handlerCreate,
@@ -61,9 +61,8 @@ window.addEventListener("click", (e) => {
 
 $formulario.addEventListener("submit", (e) => {
   e.preventDefault();
-  console.log('id',$formulario.txtId.value);
   const nuevoElementoForm = CrearNuevoElemento($formulario);
-  console.log(nuevoElementoForm);
+  limpiarTabla();
   // ABM
   if ($formulario.txtId.value == "") {
     handlerCreate(nuevoElementoForm);
@@ -73,6 +72,7 @@ $formulario.addEventListener("submit", (e) => {
     handlerUpdate(nuevoElementoForm);
   }
   $formulario.reset();
+  handlerRead();
 });
 
 $btnEliminar.addEventListener("click", (e) => {

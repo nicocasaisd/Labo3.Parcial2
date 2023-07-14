@@ -1,6 +1,13 @@
 
 const $tabla = document.getElementById("tabla");
 
+export function limpiarTabla(){
+  // Elimino todos los nodos hijos del $tabla
+  while ($tabla.firstElementChild) {
+    $tabla.removeChild($tabla.firstElementChild);
+  }
+}
+
 export function actualizarTabla(data) {
   // Elimino todos los nodos hijos del $tabla
   while ($tabla.firstElementChild) {

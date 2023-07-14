@@ -119,6 +119,22 @@
       "editorial": "Marvel",
       "fuerza": 50,
       "arma": 1
+    },
+    {
+      "id": 1689334719470,
+      "nombre": "Nico",
+      "alias": "Casais",
+      "editorial": "DC",
+      "fuerza": 100,
+      "arma": 6
+    },
+    {
+      "id": 1689334801027,
+      "nombre": "Gaston",
+      "alias": "Penlington",
+      "editorial": "Marvel",
+      "fuerza": 0,
+      "arma": 2
     }
   ]
 }
